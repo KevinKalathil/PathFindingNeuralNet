@@ -8,7 +8,7 @@ class Agent {
         this.INITPOSY = (path[0].posy+path[1].posy-10)/2;
         this.posx = this.INITPOSX;
         this.posy = this.INITPOSY;
-        this.speedX = 0.5;
+        this.speedX = 2;
         this.speedY = 0;
 
         //8 markers to represent distance from path
@@ -69,6 +69,8 @@ class Agent {
                 console.log('HIT')
                 this.posx = this.INITPOSX
                 this.posy = this.INITPOSY
+                Net.backProp(this);
+            
         }
     }
 
@@ -125,12 +127,12 @@ class Agent {
             // this.bottomRightRIGHT/=70;            
 
             topLeftUPElem.innerHTML = this.topLeftUP;
-            topLeftLEFTElem.innerHTML = this.topLeftLEFT;
+            // topLeftLEFTElem.innerHTML = this.topLeftLEFT;
             topRightUPElem.innerHTML = this.topRightUP;
-            topRightRIGHTElem.innerHTML = this.topRightRIGHT;
-            bottomLeftLEFTElem.innerHTML = this.bottomLeftLEFT;
+            // topRightRIGHTElem.innerHTML = this.topRightRIGHT;
+            // bottomLeftLEFTElem.innerHTML = this.bottomLeftLEFT;
             bottomLeftDOWNElem.innerHTML = this.bottomLeftDOWN;
-            bottomRightRIGHTElem.innerHTML = this.bottomRightRIGHT;
+            // bottomRightRIGHTElem.innerHTML = this.bottomRightRIGHT;
             bottomRightDOWNElem.innerHTML = this.bottomRightDOWN;
 
 
@@ -142,4 +144,9 @@ class Agent {
 
 }
 
-const agent = new Agent();
+const agents = []
+agents.push(new Agent());
+// agents.push(new Agent());
+// agents.push(new Agent());
+// agents.push(new Agent());
+// const agent = new Agent();

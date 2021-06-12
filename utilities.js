@@ -1,19 +1,21 @@
 function animate(){
     backgroundCtx.clearRect(0, 0, background.width, background.height);
-    path.forEach(rectangle => {
-        rectangle.draw();
-        agent.collision(rectangle);
+    agents.forEach(agent => {
+        path.forEach(rectangle => {
+            rectangle.draw();
+            agent.collision(rectangle);
+        })    
     })
-    agent.speedY = Net.forwardProp()*1;
-    if(counter%100==0){
-        Net.backProp();
-    }
-    vert.innerHTML = agent.speedY;
-    agent.getMarkerLengths();
-    agent.draw();
-    agent.update();
-    target.draw();
-    counter++;
+
+    agents.forEach(agent => {
+        agent.speedY = Net.forwardProp(agent)*2;
+        vert.innerHTML = agent.speedY;
+        agent.getMarkerLengths();
+        agent.draw();
+        agent.update();
+    })
+    target.draw();    
+
     requestAnimationFrame(animate);
 }
 

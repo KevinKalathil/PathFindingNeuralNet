@@ -4,16 +4,15 @@ class Network {
         //8 5 1
         this.learningRate = learningRate;
 
-        this.input = [agent.topLeftUP/100, agent.topRightUP/100, agent.topRightRIGHT/100
-            ,agent.bottomLeftLEFT/100, agent.bottomLeftDOWN/100, agent.bottomRightDOWN/100, agent.bottomRightRIGHT/100];
+        this.input = [];
         console.log(this.input);
 
-        this.FC1 = new FC(this.input.length, 5, false);
-        this.FC2 = new FC(5, 1, true);
+        this.FC1 = new FC(8, 2);
+        this.FC2 = new FC(2, 1);
         this.output = 0;
     }
 
-    forwardProp(){
+    forwardProp(agent){
         this.input = [agent.topLeftLEFT/100, agent.topLeftUP/100, agent.topRightUP/100, agent.topRightRIGHT/100
             ,agent.bottomLeftLEFT/100, agent.bottomLeftDOWN/100, agent.bottomRightDOWN/100, agent.bottomRightRIGHT/100];
         
@@ -23,8 +22,8 @@ class Network {
         console.log(this.output);
         return this.output;  
     }
-    backProp(){
-        let target = this.getTarget();
+    backProp(agent){
+        let target = this.getTarget(agent);
         targ.innerHTML = target;
 
         for(let i=0;i<this.FC2.output.length;i++){
@@ -38,16 +37,34 @@ class Network {
         this.updateWeights();
     }
 
-    getTarget(){
-        let netVERTICAL = Math.min(agent.topLeftUP,agent.topRightUP)-Math.min(agent.bottomLeftDOWN,agent.bottomRightDOWN);
-        let netHORIZONTAL = -agent.topLeftLEFT+agent.topRightRIGHT-agent.bottomLeftLEFT+agent.bottomRightRIGHT;
-        if(netVERTICAL>=5){
-            return -1.0;
-        }
-        else if(netVERTICAL<-5){
-            return 1.0;
-        }
-        else return 0;
+    getTarget(agent){
+        let netVERTICAL = (Math.min(agent.topLeftUP,agent.topRightUP)-Math.min(agent.bottomLeftDOWN,agent.bottomRightDOWN))/pathWidth;
+        // let netHORIZONTAL = (Math.min(agent.topRightRIGHT, agent.bottomRightRIGHT)-Math.min(agent.topLeftLEFT,agent.bottomLeftLEFT))/length;
+
+        if(netVERTICAL>0) return -1;
+        else return 1;
+        
+        // if(Math.abs(netHORIZONTAL) - Math.abs(netVERTICAL)>0.1){
+        //     if(netHORIZONTAL >=0.1){
+        //         return 1;
+        //     }
+        //     else if(netHORIZONTAL<=-0.1){
+        //         return -1;
+        //     }
+        //     else return 0;
+    
+        // }
+        // else if(Math.abs(netHORIZONTAL) - Math.abs(netVERTICAL)<-0.1){
+        //     if(netVERTICAL>=0.1){
+        //         return -1;
+        //     }
+        //     else if(netVERTICAL<=-0.1){
+        //         return 1;
+        //     }    
+        //     else return 0;
+        // }else{
+        //     return 0;
+        // }
         // else{
         //     if(netHORIZONTAL>0){
         //         return -1;
@@ -59,16 +76,17 @@ class Network {
     }
 
     updateWeights(){
-        for(let i=0;i<this.FC1.inputSize;i++){
-            for(let j=0;j<this.FC1.output.length;j++){
-                this.FC1.weights[j][i]-=Net.learningRate*this.FC1.delta[j][i]*this.input[i];
-            }            
-        }
         for(let i=0;i<this.FC2.inputSize;i++){
             for(let j=0;j<this.FC2.output.length;j++){
                 this.FC2.weights[j][i]-=Net.learningRate*this.FC2.delta[j][i]*this.FC1.activation[i];
             }            
         }
+        for(let i=0;i<this.FC1.inputSize;i++){
+            for(let j=0;j<this.FC1.output.length;j++){
+                this.FC1.weights[j][i]-=Net.learningRate*this.FC1.delta[j][i]*this.input[i];
+            }            
+        }
+
     }
 
 }
@@ -78,25 +96,25 @@ class FC {
         this.inputSize = input;
         this.outputSize = size;
         this.weights = [];
-        this.bias = Math.random()*2-1;
+        this.bias = Math.random()-0.5;
         this.delta = [];
         for(var i=0;i<size;i++) {
             let element = [];
-            for(var x=0;x<input;x++) element.push(Math.random()*2-1);
+            for(var x=0;x<input;x++) element.push(Math.random()-0.5);
 
             this.weights.push(element);
         }
         for(var i=0;i<size;i++) {
             let element = [];
-            for(var x=0;x<input;x++) element.push(Math.random()*2-1);
+            for(var x=0;x<input;x++) element.push(Math.random()-0.5);
 
             this.delta.push(element);
         }
                 // this.delta = this.weights;
         this.output=[];
-        for(var x=0;x<size;x++) this.output.push(Math.random()*2-1);
+        for(var x=0;x<size;x++) this.output.push(Math.random()-0.5);
         this.activation = [];
-        for(var x=0;x<size;x++) this.activation.push(Math.random()*2-1);
+        for(var x=0;x<size;x++) this.activation.push(Math.random()-0.5);
     }
 
     forwardProp(input){
@@ -111,28 +129,33 @@ class FC {
         this.output = result;
         this.activation = this.output;
         this.activation = this.sigmoid();
-        return this.output;
+        return this.activation;
     }
 
     sigmoid(){
         for(let i=0;i<this.output.length;i++){
-            this.activation[i] = 2/(1+Math.pow(Math.E, this.activation[i])) -1;
+            this.activation[i] = 1/(1+Math.pow(Math.E, this.activation[i])) -0.5;
         }
         return this.activation;
     }
+    softmax(arr) {
+        return arr.map(function(value,index) { 
+          return Math.exp(value) / arr.map( function(y /*value*/){ return Math.exp(y) } ).reduce( function(a,b){ return a+b })
+        })
+    }
 
     backPropagation(input){
-        for(let k=0;k<this.inputSize;k++){
-            for(let i=0;i<input.length;i++){
-                for(let j=0;j<this.output.length;j++){
-                    Net.FC1.delta[k][i] += this.delta[j][k]*this.weights[j][k];
+        for(let i=0;i<input.length;i++){
+            for(let j=0;j<this.inputSize;j++){
+                for(let k=0;k<this.output.length;k++){
+                    Net.FC1.delta[j][i] += this.delta[k][j]*this.weights[k][j];
                 }
                 // Net.FC1.delta[k][i] *= Net.FC1.activation[k]*(1-Net.FC1.activation[k])*input[i];
-                Net.FC1.delta[k][i] *= Net.FC1.activation[k]*(1-Net.FC1.activation[k]);
+                Net.FC1.delta[j][i] *= Net.FC1.activation[j]*(1-Net.FC1.activation[j]);
             }
         }
     }
 
 }
 
-const Net = new Network(0.4);
+const Net = new Network(0.5);
