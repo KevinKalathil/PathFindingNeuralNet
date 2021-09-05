@@ -11,11 +11,11 @@ netVisualizationTextCtx.font = "15px Arial";
 function updateGraph(){
     netVisualizationTextCtx.clearRect(0, 0, netVisualizationText.width, netVisualizationText.height);
 
-    for(let i=0;i<8;i++){
+    for(let i=0;i<4;i++){
         netVisualizationCtx.beginPath();
-        netVisualizationCtx.arc(72.5, 40.5+100*i, 30, 0, Math.PI * 2, true); // Outer circle
+        netVisualizationCtx.arc(72.5, 40.5+200*i, 30, 0, Math.PI * 2, true); // Outer circle
         netVisualizationCtx.stroke();  
-        if(Net.input[i]) netVisualizationTextCtx.fillText(Net.input[i].toFixed(2), 60, 40.5+100*i);
+        if(Net.input[i]) netVisualizationTextCtx.fillText(Net.input[i].toFixed(2), 60, 40.5+200 *i);
     }
     
     for(let i=0;i<2;i++){

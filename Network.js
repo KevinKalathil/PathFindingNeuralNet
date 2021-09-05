@@ -10,15 +10,14 @@ class Network {
         this.FC1 = new FC(4, 2);
         this.FC2 = new FC(2, 1);
         this.output = 0;
-        this.scale = 300;
+        this.scale = 100;
         this.outputScale = 1;
     }
 
     forwardProp(agent){
         // this.input = [agent.topLeftLEFT/100, agent.topLeftUP/100, agent.topRightUP/100, agent.topRightRIGHT/100
         //     ,agent.bottomLeftLEFT/100, agent.bottomLeftDOWN/100, agent.bottomRightDOWN/100, agent.bottomRightRIGHT/100];
-        this.input = [agent.topLeftUP/300, agent.topRightUP/300, agent.bottomLeftDOWN/300, agent.bottomRightDOWN/300];
-        // this.input = [agent.topLeftUP/this.scale, agent.topRightUP/this.scale, -agent.bottomLeftDOWN/this.scale, -agent.bottomRightDOWN/this.scale];
+        this.input = [agent.topLeftUP/this.scale, agent.topRightUP/this.scale, agent.bottomLeftDOWN/this.scale, agent.bottomRightDOWN/this.scale];
         
         let inputFC2 = this.FC1.forwardProp(this.input);
         this.FC2.input = inputFC2;

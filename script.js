@@ -7,6 +7,8 @@ const stroke = 2;
 // ctx.canvas.height = 500;
 const length = backgroundCtx.canvas.width/4;
 const pathWidth = 200;
+// const length = backgroundCtx.canvas.width/12;
+// const pathWidth = 90;
 
 let path = []
 

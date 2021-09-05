@@ -17,7 +17,7 @@ function animate(){
 
     agents.forEach(agent => {
         // if(counter%1==0)Net.backProp(agent);
-        agent.speedY = Net.forwardProp(agent)*4;
+        agent.speedY = Net.forwardProp(agent);
         // vert.innerHTML = agent.speedY;
         agent.getMarkerLengths();
         agent.draw();
