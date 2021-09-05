@@ -1,9 +1,60 @@
-.wrapper {
-  border: 5px solid black;
+/* .wrapper {
+  border: 2px solid black;
   top: 50%;
-  left: 70%;
+  left: 50%; */
+/* position: absolute; */
+/* width: 700px;
+  height: 600px; */
+/* transform: translate(-50%, -50%); */
+/* } */
+
+/* .wrapper1 { */
+/* border: 2px solid black; */
+/* top: 40%;
+  left: 25%;
   position: absolute;
   width: 700px;
   height: 600px;
   transform: translate(-50%, -50%);
+} */
+
+.parent_id {
+  position: relative;
+  height: 90vh;
+  /* height: max-content; */
+  /* top: 50%; */
+}
+
+.child1 {
+  position: absolute;
+  border: 2px solid black;
+  top: 30%;
+  left: 95%;
+  z-index: 2;
+  transform: translate(-95%, -30%);
+}
+
+.child2 {
+  position: absolute;
+  border: 2px solid black;
+  top: 30%;
+  left: 5%;
+  z-index: 2;
+  transform: translate(-5%, -30%);
+}
+
+.wrapper1 {
+  /* top: 0px;
+  left: 0px;
+  position: absolute; */
+  width: 700px;
+  height: 500px;
+
+  /* transform: translate(-50%, -50%); */
+  /* width: 50%; */
+  /* float: left;
+  position:absolute
+  /* border: 2px solid black; */
+  /* padding: 40px;
+  border: 2px solid black; */
 }

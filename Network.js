@@ -5,74 +5,51 @@ class Network {
         this.learningRate = learningRate;
 
         this.input = [];
-        console.log(this.input);
+        // console.log(this.input);
 
-        this.FC1 = new FC(8, 2);
+        this.FC1 = new FC(4, 2);
         this.FC2 = new FC(2, 1);
         this.output = 0;
+        this.scale = 300;
+        this.outputScale = 1;
     }
 
     forwardProp(agent){
-        this.input = [agent.topLeftLEFT/100, agent.topLeftUP/100, agent.topRightUP/100, agent.topRightRIGHT/100
-            ,agent.bottomLeftLEFT/100, agent.bottomLeftDOWN/100, agent.bottomRightDOWN/100, agent.bottomRightRIGHT/100];
+        // this.input = [agent.topLeftLEFT/100, agent.topLeftUP/100, agent.topRightUP/100, agent.topRightRIGHT/100
+        //     ,agent.bottomLeftLEFT/100, agent.bottomLeftDOWN/100, agent.bottomRightDOWN/100, agent.bottomRightRIGHT/100];
+        this.input = [agent.topLeftUP/300, agent.topRightUP/300, agent.bottomLeftDOWN/300, agent.bottomRightDOWN/300];
+        // this.input = [agent.topLeftUP/this.scale, agent.topRightUP/this.scale, -agent.bottomLeftDOWN/this.scale, -agent.bottomRightDOWN/this.scale];
         
         let inputFC2 = this.FC1.forwardProp(this.input);
         this.FC2.input = inputFC2;
         this.output = this.FC2.forwardProp(inputFC2);
-        console.log(this.output);
-        return this.output;  
+        // console.log(this.output);
+        return 2*this.output;  
     }
     backProp(agent){
         let target = this.getTarget(agent);
-        targ.innerHTML = target;
+        // targ.innerHTML = target;
 
         for(let i=0;i<this.FC2.output.length;i++){
             for(let j=0;j<this.FC2.inputSize;j++){
-                this.FC2.delta[i][j] = -1*(target-this.FC2.activation[i])*(this.FC2.activation[i])*(1-this.FC2.activation[i]);
+                this.FC2.delta[i][j] = -1*(-target/this.FC2.activation[i] + ((1-target)/(1-this.FC2.activation[i])))*(this.FC2.activation[i])*(1-this.FC2.activation[i]);
             }
         }
-        this.input = [agent.topLeftLEFT/100, agent.topLeftUP/100, agent.topRightUP/100, agent.topRightRIGHT/100
-            ,agent.bottomLeftLEFT/100, agent.bottomLeftDOWN/100, agent.bottomRightDOWN/100, agent.bottomRightRIGHT/100];
+        // this.input = [agent.topLeftLEFT/100, agent.topLeftUP/100, agent.topRightUP/100, agent.topRightRIGHT/100
+        //     ,agent.bottomLeftLEFT/100, agent.bottomLeftDOWN/100, agent.bottomRightDOWN/100, agent.bottomRightRIGHT/100];
+        this.input = [agent.topLeftUP/this.scale, agent.topRightUP/this.scale, agent.bottomLeftDOWN/this.scale,agent.bottomRightDOWN/this.scale];
         this.FC2.backPropagation(this.input);
         this.updateWeights();
     }
 
     getTarget(agent){
         let netVERTICAL = (Math.min(agent.topLeftUP,agent.topRightUP)-Math.min(agent.bottomLeftDOWN,agent.bottomRightDOWN))/pathWidth;
-        // let netHORIZONTAL = (Math.min(agent.topRightRIGHT, agent.bottomRightRIGHT)-Math.min(agent.topLeftLEFT,agent.bottomLeftLEFT))/length;
+        let netHORIZONTAL = (Math.min(agent.topRightRIGHT,agent.bottomRightRIGHT)-Math.min(agent.bottomLeftLEFT,agent.topLeftLEFT))/pathWidth;
+        console.log(netVERTICAL)
 
-        if(netVERTICAL>0) return -1;
-        else return 1;
-        
-        // if(Math.abs(netHORIZONTAL) - Math.abs(netVERTICAL)>0.1){
-        //     if(netHORIZONTAL >=0.1){
-        //         return 1;
-        //     }
-        //     else if(netHORIZONTAL<=-0.1){
-        //         return -1;
-        //     }
-        //     else return 0;
-    
-        // }
-        // else if(Math.abs(netHORIZONTAL) - Math.abs(netVERTICAL)<-0.1){
-        //     if(netVERTICAL>=0.1){
-        //         return -1;
-        //     }
-        //     else if(netVERTICAL<=-0.1){
-        //         return 1;
-        //     }    
-        //     else return 0;
-        // }else{
-        //     return 0;
-        // }
-        // else{
-        //     if(netHORIZONTAL>0){
-        //         return -1;
-        //     }
-        //     else{
-        //         return 1;
-        //     }
-        // }
+
+        if(netVERTICAL>=0) return -1;
+        else if(netVERTICAL<0) return 1;
     }
 
     updateWeights(){
@@ -96,25 +73,25 @@ class FC {
         this.inputSize = input;
         this.outputSize = size;
         this.weights = [];
-        this.bias = Math.random()-0.5;
+        this.bias = Math.random();
         this.delta = [];
         for(var i=0;i<size;i++) {
             let element = [];
-            for(var x=0;x<input;x++) element.push(Math.random()-0.5);
+            for(var x=0;x<input;x++) element.push(Math.random());
 
             this.weights.push(element);
         }
         for(var i=0;i<size;i++) {
             let element = [];
-            for(var x=0;x<input;x++) element.push(Math.random()-0.5);
+            for(var x=0;x<input;x++) element.push(Math.random());
 
             this.delta.push(element);
         }
                 // this.delta = this.weights;
         this.output=[];
-        for(var x=0;x<size;x++) this.output.push(Math.random()-0.5);
+        for(var x=0;x<size;x++) this.output.push(Math.random());
         this.activation = [];
-        for(var x=0;x<size;x++) this.activation.push(Math.random()-0.5);
+        for(var x=0;x<size;x++) this.activation.push(Math.random());
     }
 
     forwardProp(input){
@@ -125,10 +102,11 @@ class FC {
                 result[i]+=this.weights[i][j]*input[j];
             }
         }
-        console.log(result);
+        // console.log(result);
         this.output = result;
         this.activation = this.output;
         this.activation = this.sigmoid();
+        console.log(this.weights)
         return this.activation;
     }
 
@@ -150,7 +128,6 @@ class FC {
                 for(let k=0;k<this.output.length;k++){
                     Net.FC1.delta[j][i] += this.delta[k][j]*this.weights[k][j];
                 }
-                // Net.FC1.delta[k][i] *= Net.FC1.activation[k]*(1-Net.FC1.activation[k])*input[i];
                 Net.FC1.delta[j][i] *= Net.FC1.activation[j]*(1-Net.FC1.activation[j]);
             }
         }
@@ -158,4 +135,4 @@ class FC {
 
 }
 
-const Net = new Network(0.5);
+const Net = new Network(0.8);

@@ -8,7 +8,7 @@ class Agent {
         this.INITPOSY = (path[0].posy+path[1].posy-10)/2;
         this.posx = this.INITPOSX;
         this.posy = this.INITPOSY;
-        this.speedX = 2;
+        this.speedX = 1.2;
         this.speedY = 0;
 
         //8 markers to represent distance from path
@@ -60,18 +60,19 @@ class Agent {
             //top left corner of agent
             ( (this.posx>=obstacle.posx && this.posx <= (obstacle.posx+obstacle.length))) && (this.posy>=obstacle.posy && this.posy <= (obstacle.posy+obstacle.height))
             || 
-            ( ( (this.posx+this.width)>=obstacle.posx && (this.posx+this.width) <= (obstacle.posx+obstacle.length))) && (this.posy>=obstacle.posy && (this.posy+this.height) <= (obstacle.posy+obstacle.height))
+            ( ( (this.posx+this.width)>=obstacle.posx && (this.posx+this.width) <= (obstacle.posx+obstacle.length))) && (this.posy>=obstacle.posy && (this.posy) <= (obstacle.posy+obstacle.height))
             ||
             ( (this.posx>=obstacle.posx && this.posx <= (obstacle.posx+obstacle.length))) && ( (this.posy+this.height)>=obstacle.posy && (this.posy+this.height) <= (obstacle.posy+obstacle.height))
             ||
             ( ((this.posx+this.width)>=obstacle.posx && (this.posx+this.width) <= (obstacle.posx+obstacle.length))) && ( (this.posy+this.height)>=obstacle.posy && (this.posy+this.height) <= (obstacle.posy+obstacle.height))
         ){
                 console.log('HIT')
-                this.posx = this.INITPOSX
-                this.posy = this.INITPOSY
-                Net.backProp(this);
-            
+                this.posx = 20;
+                this.posy = (path[0].posy+path[1].posy-10)/2;
+                return true;
+                    
         }
+        return false;
     }
 
     getMarkerLengths () {
@@ -126,14 +127,14 @@ class Agent {
             // this.bottomRightUP/=70;
             // this.bottomRightRIGHT/=70;            
 
-            topLeftUPElem.innerHTML = this.topLeftUP;
+            // topLeftUPElem.innerHTML = this.topLeftUP;
             // topLeftLEFTElem.innerHTML = this.topLeftLEFT;
-            topRightUPElem.innerHTML = this.topRightUP;
+            // topRightUPElem.innerHTML = this.topRightUP;
             // topRightRIGHTElem.innerHTML = this.topRightRIGHT;
             // bottomLeftLEFTElem.innerHTML = this.bottomLeftLEFT;
-            bottomLeftDOWNElem.innerHTML = this.bottomLeftDOWN;
+            // bottomLeftDOWNElem.innerHTML = this.bottomLeftDOWN;
             // bottomRightRIGHTElem.innerHTML = this.bottomRightRIGHT;
-            bottomRightDOWNElem.innerHTML = this.bottomRightDOWN;
+            // bottomRightDOWNElem.innerHTML = this.bottomRightDOWN;
 
 
         })
@@ -150,3 +151,8 @@ agents.push(new Agent());
 // agents.push(new Agent());
 // agents.push(new Agent());
 // const agent = new Agent();
+
+function initAgentPos(){ 
+    agents[0].posx = 20;
+    agents[0].posy = (path[0].posy+path[1].posy)/2;
+}

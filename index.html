@@ -1,32 +1,59 @@
 <html>
     <head>
-
+        <!-- <script src="https://cdn.zingchart.com/zingchart.min.js"></script> -->
     </head>
         <!-- <link rel="stylesheet" href="style.css"> -->
     <body>
         <link rel='stylesheet' href='style.css'></link>
 
-        <h1>Canvas</h1>
-        <button id='mapbtn'>Generate Map</button>   
-        <div class = 'wrapper'>
-            <canvas id='background' width='700' height = '600'></canvas>
-            <canvas id='playerSurface' width='700' height = '600'></canvas>
-        </div> 
-        <!-- <h2 id = 'topLeftLEFT'></h2> -->
+        <!-- <h1>Canvas</h1>
+        <button id='mapbtn'>Generate Map</button>    -->
+        <div class='parent_id'>
+            <div class = 'child1'>
+                <canvas id='background' width='800' height = '800'></canvas>
+            </div> 
+            <div class = 'child1'>
+                <canvas id='playerSurface' width='800' height = '800'></canvas>
+            </div>
+            <div class = 'child2'>
+                <canvas id='netVisualization' width='800' height = '800'></canvas>
+            </div>
+            <div class = 'child2'>
+                <canvas id='netVisualizationText' width='800' height = '800'></canvas>
+            </div>     
+        </div>
+        <!-- <div class='child'>
+            </div> -->
+            <!-- <div class = 'wrapper1'>
+                <canvas id='background' width='700' height = '600'></canvas>
+            </div>      -->
+
+        <!-- <div class="float-container">
+
+            <div class="float-child">
+              <div class="green">Float Column 1</div>
+            </div>
+            
+            <div class="float-child">
+              <div class="blue">Float Column 2</div>
+            </div>
+            
+        </div> -->
+        <!-- <h2 id = 'topLeftLEFT'></h2>
         <h2 id = 'topLeftUP'></h2>
         <h2 id = 'topRightUP'></h2>
-        <!-- <h2 id = 'topRightRIGHT'></h2> -->
-        <!-- <h2 id = 'bottomLeftLEFT'></h2> -->
+        <h2 id = 'topRightRIGHT'></h2>
+        <h2 id = 'bottomLeftLEFT'></h2>
         <h2 id = 'bottomLeftDOWN'></h2>
         <h2 id = 'bottomRightDOWN'></h2>
-        <!-- <h2 id = 'bottomRightRIGHT'></h2> -->
+        <h2 id = 'bottomRightRIGHT'></h2>
         <h2 id = 'vert'></h2>
-        <h2 id = 'targ'></h2>
+        <h2 id = 'targ'></h2> -->
         <script src='script.js'></script>
         <script src='Obstacle.js'></script>
         <script src='target.js'></script>
         <script src='Agent.js'></script>
         <script src='Network.js'></script>
+        <script src='Graph.js'></script>
         <script src='utilities.js'></script>
-    </body>
 </html>

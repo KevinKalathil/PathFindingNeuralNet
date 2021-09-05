@@ -19,7 +19,7 @@ class Obstacle {
 }
 
 function initMap(){
-    let arr = Array(4).fill().map(() => Math.round(Math.random()));
+    let arr = Array(1).fill().map(() => Math.round(Math.random()));
     path = []
 
     backgroundCtx.fillStyle = 'black';
