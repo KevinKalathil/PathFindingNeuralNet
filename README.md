@@ -34,9 +34,9 @@
 ![Product Name Screen Shot][product-screenshot]
 `Shows The Network Training`
 
-The goal of this project was to develop a stronger understanding of how neural networks 'train' and demystify the backpropagation algorithm that helps the neural network improve. The neural network is built using a simple three-layer MLP network with 4 inputs (distance from the agent's corners to the pathway) and a single output which represents speed of the agent on the y-axis
+The goal of this project was to develop a stronger understanding of how neural networks 'train' and demystify the backpropagation algorithm that helps the neural network improve. The neural network was built using a simple three-layer MLP network with 4 inputs (vertical distance from the agent's corners to the pathway - Top Left, Top Right, Bottom Left, and Bottom Right) and a single output which represents speed of the agent on the y-axis
 
-After each 'failure', the backpropagation algorithm is executed and the weights are updated. The following link was followed closely to write the backpropagation algorithm : https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/ along with the instructional videos provided by Andrew Ng's Machine Learning course on Coursera. I first used the MSE loss function for the purpose of simplicity but switched to a cross-entropy loss function after a few trials of experimentation. I realized that the weights were not updating due the vanishing gradients problem and so I followed the suggestions of Michael Nielson in his Deep Learning book (http://neuralnetworksanddeeplearning.com/chap3.html). The cross-entropy solved the initial issue as it's first derivative scales up as the error increases and the speed of training increased considerably.
+After each 'failure', the backpropagation algorithm is executed and the weights are updated. The following link was followed closely to write the backpropagation algorithm : https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/ along with the instructional videos provided by Prof. Andrew Ng's Machine Learning course on Coursera. I first used the MSE loss function for the purpose of simplicity but switched to a cross-entropy loss function after a few trials of experimentation. I realized that the weights were not updating due the vanishing gradients problem and so I followed the suggestions of Michael Nielson in chapter 3 of his Deep Learning book (http://neuralnetworksanddeeplearning.com/chap3.html). The cross-entropy solved the initial issue as it's first derivative scales up as the error increases and the speed of training increased considerably.
 
 ### Built With
 
@@ -51,7 +51,7 @@ To get a local copy up and running follow these simple example steps.
 
 ## Next Steps
 
-I originally intend for the path to have multiple turns instead of just the single one that is currently shown. However, the current testing environment causes it to struggle with multiple turns. I don't see this as a completely unexpected issue, but rather a fault in the experiment's design. The mid point of the path is an ambiguous point between whether or not to tell the network it should have went up/down and although it fails, it generally gets to a point where it at least goes near the midpoint. Will work on resolving this issue as a next step of this project, either by redesigning the experiment, or making some modification to the network itself.
+I originally intended for the path to have multiple turns instead of just the single one that is currently shown. However, the current testing environment causes it to struggle with multiple turns. I don't see this as a completely unexpected issue, but rather a fault in the experiment's design. The mid point of the path is an ambiguous point between whether or not to tell the network it should have went up/down and although it fails, it generally gets to a point where it at least goes near the midpoint. Will work on resolving this issue as a next step of this project, either by redesigning the experiment, or making some modification to the network itself.
 
 ![Product Name Screen Shot][failure-screenshot]
 
